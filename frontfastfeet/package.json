@@ -7,6 +7,12 @@
       "pre-commit": "lint-staged"
     }
   },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "dependencies": {
     "@material-ui/core": "^4.9.7",
     "@rocketseat/unform": "^1.6.2",
@@ -20,6 +26,7 @@
     "history": "^4.10.1",
     "husky": "^4.2.3",
     "immer": "^6.0.2",
+    "lint-staged": "^10.0.8",
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
