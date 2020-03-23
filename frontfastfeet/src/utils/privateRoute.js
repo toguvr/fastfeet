@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { routes } from '~/pages/routes';
+import { routes } from '~/routes';
 
 // const mapStateToProps = state => ({
 //     actualProfile: state.requests.actualProfile,

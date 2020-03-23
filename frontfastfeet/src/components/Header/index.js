@@ -1,35 +1,53 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Notifications from 'components/Notifications';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import logo from '~/assets/logoCor.svg';
-import { Container, Content, Profile } from './styles';
+import logo from '~/assets/logo.png';
+import { Container, Content, Profile, LinkPage } from './styles';
 import { routes } from '~/routes';
 
 export default function Header() {
   const profile = useSelector(state => state.user.profile);
+  const history = useHistory();
+  function logout() {
+    localStorage.clear();
+    history.push(routes.signin);
+  }
   return (
     <Container>
       <Content>
         <nav>
           <img src={logo} alt="GoBarber" />
-          <Link to={routes.dashboard}>DASHBOARD</Link>
+          <LinkPage
+            thisPage={history.location.pathname === routes.orders}
+            to={routes.orders}
+          >
+            ENCOMENDAS
+          </LinkPage>
+          <LinkPage
+            thisPage={history.location.pathname === routes.deliveryman}
+            to={routes.deliveryman}
+          >
+            ENTREGADORES
+          </LinkPage>
+          <LinkPage
+            thisPage={history.location.pathname === routes.recipient}
+            to={routes.recipient}
+          >
+            DESTINATÁRIOS
+          </LinkPage>
+          <LinkPage
+            thisPage={history.location.pathname === routes.problem}
+            to={routes.problem}
+          >
+            PROBLEMAS
+          </LinkPage>
         </nav>
         <aside>
-          <Notifications />
           <Profile>
             <div>
-              <strong>{profile.name}</strong>
-              <Link to={routes.profile}>Meu Perfil</Link>
+              <strong>Admin FastFeet</strong>
+              <span onClick={logout}>Sair do sistema</span>
             </div>
-            <img
-              src={
-                profile.avatar
-                  ? profile.avatar.url
-                  : 'https://api.adorable.io/avatars/50/abott@adorable.png'
-              }
-              alt="GoBarber"
-            />
           </Profile>
         </aside>
       </Content>

@@ -6,7 +6,6 @@ import Helmet from 'react-helmet';
 import { useDispatch } from 'react-redux';
 import logo from '~/assets/logo.svg';
 import { routes } from '~/routes';
-import { signUpRequest } from '~/store/modules/auth/actions';
 
 const Schema = Yup.object().shape({
   name: Yup.string().required('Nome obrigatório'),
@@ -23,7 +22,6 @@ export default function Signup() {
   const dispatch = useDispatch();
   function handleSubmit(data) {
     const { name, email, password } = data;
-    dispatch(signUpRequest(name, email, password));
   }
 
   return (

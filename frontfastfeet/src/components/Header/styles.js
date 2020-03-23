@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   background: #fff;
@@ -18,14 +19,10 @@ export const Content = styled.div`
     align-items: center;
 
     img {
+      width: 135px;
       margin-right: 20px;
       padding-right: 20px;
       border-right: 1px solid #eee;
-    }
-
-    a {
-      font-weight: bold;
-      color: #7159c1;
     }
   }
   aside {
@@ -46,19 +43,22 @@ export const Profile = styled.div`
 
     strong {
       display: block;
-      color: #333;
+      color: #666666;
+      font-size: 14px;
     }
-    a {
+
+    span {
       display: block;
       margin-top: 2px;
       font-size: 12px;
-      color: #999;
+      color: #de3b3b;
+      cursor: pointer;
     }
   }
+`;
 
-  img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-  }
+export const LinkPage = styled(Link)`
+  font-weight: bold;
+  color: ${props => (props.thisPage ? '#444444' : '#999999')};
+  margin-right: 21px;
 `;

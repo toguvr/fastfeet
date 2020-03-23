@@ -2,17 +2,31 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  height: 100%;
-  background: linear-gradient(-90deg, #7159c1, #ab59c1);
+  background: #7d40e7 0% 0% no-repeat padding-box;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100vw;
 `;
 
 export const Content = styled.div`
+  background: #ffffff 0% 0% no-repeat padding-box;
   width: 100%;
-  max-width: 315px;
-  text-align: center;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+
+  padding: 60px 30px;
+  box-shadow: 0px 0px 10px #00000033;
+  border-radius: 4px;
+  height: 425px;
+
+  img {
+    width: 259px;
+    align-self: center;
+  }
 
   form {
     display: flex;
@@ -20,51 +34,42 @@ export const Content = styled.div`
     margin-top: 30px;
   }
 
+  label {
+    text-align: left;
+    letter-spacing: 0;
+    color: #444444;
+    opacity: 1;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
   input {
-    background: rgba(0, 0, 0, 0.1);
-    border: 0;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #dddddd;
     border-radius: 4px;
-    height: 44px;
+    height: 45px;
+    width: 100%;
     padding: 0 15px;
-    color: #fff;
     margin: 0 0 10px;
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.7);
+      color: #999999;
     }
   }
 
   button {
     margin: 5px 0 0;
-    height: 44px;
-    background: #3b9eff;
+    height: 45px;
+    background: #7d40e7 0% 0% no-repeat padding-box;
+    border-radius: 4px;
     font-weight: bold;
     color: #fff;
     border: 0;
-    border-radius: 4px;
     font-size: 16px;
     transition: background 0.3s;
 
     &:hover {
-      background: ${darken(0.03, '#3b9eff')};
-    }
-  }
-
-  span {
-    color: #fb6d91;
-    align-self: flex-start;
-    margin: 0 0 10px;
-    font-weight: bold;
-  }
-
-  a {
-    color: #fff;
-    margin-top: 15px;
-    font-size: 16px;
-    opacity: 0.8;
-
-    &:hover {
-      opacity: 1;
+      background: ${darken(0.08, '#7d40e7')};
     }
   }
 `;

@@ -5,21 +5,19 @@ import { routes } from '.';
 import DefaultLayout from '~/pages/_layouts/default';
 import AuthLayout from '~/pages/_layouts/auth';
 
-import { store } from '~/store';
-
 export default function RouteWrapper({
   component: Component,
   isPrivate,
   ...rest
 }) {
-  const { signed } = store.getState().auth;
+  const signed = !!localStorage.getItem('token');
 
   if (!signed && isPrivate) {
     return <Redirect to={routes.signin} />;
   }
 
   if (signed && !isPrivate) {
-    return <Redirect to={routes.dashboard} />;
+    return <Redirect to={routes.orders} />;
   }
 
   const Layout = signed ? DefaultLayout : AuthLayout;

@@ -1,12 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import logo from '~/assets/logo.svg';
+import { toast } from 'react-toastify';
+import logo from '~/assets/logo.png';
 import { routes } from '~/routes';
-import { signInRequest } from '~/store/modules/auth/actions';
+import { createSession } from '~/services/user';
+// import { signInRequest } from '~/store/modules/auth/actions';
 
 const Schema = Yup.object().shape({
   email: Yup.string()
@@ -17,24 +19,43 @@ const Schema = Yup.object().shape({
 });
 
 export default function Signin() {
-  const dispatch = useDispatch();
-  const loading = useSelector(state => state.auth.loading);
+  const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(data) {
+  async function handleSubmit(data) {
     const { email, password } = data;
-
-    dispatch(signInRequest(email, password));
+    setLoading(true);
+    try {
+      const response = await createSession(email, password);
+      toast.success('Autenticado com sucesso e redirecionado para o painel');
+      localStorage.setItem('token', response.data.token);
+      history.push(routes.orders);
+    } catch (err) {
+      setLoading(false);
+      toast.error('Falha na autenticação, confira seu usuário e senha');
+    }
   }
   return (
     <>
       <img src={logo} alt="Gobarber" />
       <Form schema={Schema} onSubmit={handleSubmit}>
-        <Input name="email" type="email" placeholder="Email" />
-        <Input name="password" type="password" placeholder="Senha" />
+        <label htmlFor="email">SEU E-MAIL</label>
+        <Input
+          is="email"
+          name="email"
+          type="email"
+          placeholder="exemplo@email.com"
+        />
+        <label htmlFor="id_password">SUA SENHA</label>
+        <Input
+          id="id_password"
+          name="password"
+          type="password"
+          placeholder="********"
+        />
         <button type="submit">
-          {loading ? <CircularProgress size={24} /> : 'Login'}
+          {loading ? <CircularProgress size={24} /> : 'Entrar no sistema'}
         </button>
-        <Link to={routes.signup}>Criar conta</Link>
       </Form>
     </>
   );
