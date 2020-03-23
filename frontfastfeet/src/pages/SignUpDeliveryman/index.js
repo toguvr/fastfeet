@@ -35,7 +35,7 @@ export default function SignUpDeliveryman() {
     <>
       <Container>
         <header>
-          <strong>Cadastro de destinatários</strong>
+          <strong>Cadastro de entregadores</strong>
           <div className="div">
             <button
               className="back"
