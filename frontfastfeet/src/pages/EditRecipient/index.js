@@ -84,6 +84,8 @@ export default function EditRecipient() {
                 type="text"
               />
             </label>
+          <div className="group">
+
             <label htmlFor="number">
               Número
               <input
@@ -112,6 +114,7 @@ export default function EditRecipient() {
                 type="text"
               />
             </label>
+          </div>
           </div>
           <div className="group">
             <label htmlFor="city">

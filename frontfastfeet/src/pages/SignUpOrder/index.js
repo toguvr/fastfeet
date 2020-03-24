@@ -12,6 +12,7 @@ import { routes } from '~/routes';
 import { addRecipient } from '~/services/recipient';
 import { toast } from 'react-toastify';
 import { addOrder } from '~/services/order';
+// import AsyncSelect from 'react-select/async';
 
 export default function SignUpOrder() {
   const history = useHistory();
@@ -22,6 +23,7 @@ export default function SignUpOrder() {
     recipient_id: '',
     product: ''
   });
+  // const [selectValue, setInputValue] = useState("")
 
   useEffect(()=>{
     async function getOrder() {
@@ -50,6 +52,42 @@ export default function SignUpOrder() {
     }
   }
 
+  // const loadOptionsDeliveryman = (selectValue, callback) => {
+  //   setTimeout(() => {
+  //     callback(filterDeliverymen(selectValue));
+  //   }, 1000);
+  // };
+
+  // const loadOptionsRecipient = (selectValue, callback) => {
+  //   setTimeout(() => {
+  //     callback(filterRecipient(selectValue));
+  //   }, 1000);
+  // };
+
+
+
+  // const filterDeliverymen = (selectValue) => {
+  //   if(data.deliverymen){
+  //   return data.deliverymen.filter(i =>
+  //     i.name.toLowerCase().includes(selectValue.toLowerCase())
+  //   );
+  // };}
+
+  // const filterRecipient = (selectValue) => {
+
+  //   if(data.recipient){
+  //   return data.recipient.filter(i =>
+  //      i.name.toLowerCase().includes(selectValue.toLowerCase())
+
+  //   );}
+  // };
+
+  // const handleInputChange = (newValue: string) => {
+  //   const inputValue = newValue.replace(/\W/g, '');
+  //   setInputValue( inputValue );
+  //   return inputValue;
+  // };
+
   return (
     <>
       <Container>
@@ -73,6 +111,12 @@ export default function SignUpOrder() {
           <div className="group">
             <label htmlFor="recipient_id">
               Destinatário
+              {/* <AsyncSelect
+          cacheOptions
+          loadOptions={loadOptionsRecipient}
+          defaultOptions
+          onInputChange={handleInputChange}
+        /> */}
               <select
                 onChange={event =>
                   setValues({
@@ -92,6 +136,12 @@ export default function SignUpOrder() {
             </label>
             <label htmlFor="deliveryman_id">
               Entregador
+              {/* <AsyncSelect
+          cacheOptions
+          loadOptions={loadOptionsDeliveryman}
+          defaultOptions
+          onInputChange={handleInputChange}
+        /> */}
               <select
                 onChange={event =>
                   setValues({
