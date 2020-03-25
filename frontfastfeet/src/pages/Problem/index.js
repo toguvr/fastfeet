@@ -51,9 +51,13 @@ export default function Problem() {
                 <td>
                   <Action
                     del={() => {
-                      window.confirm('Deseja realmente cancelar ?');
-                      cancelOrderProblem(problem.id);
-                      toast.success('Cancelada com sucesso');
+                      const confirm = window.confirm(
+                        'Deseja realmente cancelar ?'
+                      );
+                      if (confirm) {
+                        cancelOrderProblem(problem.id);
+                        toast.success('Cancelada com sucesso');
+                      }
                     }}
                     view={() => viewDialog(problem)}
                   />

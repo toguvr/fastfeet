@@ -81,9 +81,14 @@ export default function Deliveryman() {
                     edit={() => editDeliveryman(deliveryman)}
                     del={async () => {
                       try {
-                        await deleteDeliveryman(deliveryman.id);
-                        await getOrder();
-                        toast.success('Deletado com sucesso');
+                        const confirm = window.confirm(
+                          'Deseja realmente deletar ?'
+                        );
+                        if (confirm) {
+                          await deleteDeliveryman(deliveryman.id);
+                          await getOrder();
+                          toast.success('Deletado com sucesso');
+                        }
                       } catch (err) {
                         toast.error('Não foi possível deletar');
                       }

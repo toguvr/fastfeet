@@ -80,8 +80,13 @@ export default function Orders() {
                 <td>{order.recipient.name}</td>
                 <td>
                   <DivFlex>
-                    <Avatar color="#F4EFFC" name={order.deliveryman.name} />
-                    {order.deliveryman.name}
+                    <Avatar
+                      color="#F4EFFC"
+                      name={
+                        order.deliveryman ? order.deliveryman.name : 'FastFeet'
+                      }
+                    />
+                    {order.deliveryman && order.deliveryman.name}
                   </DivFlex>
                 </td>
                 <td>{order.recipient.city}</td>
@@ -106,9 +111,14 @@ export default function Orders() {
                     }}
                     del={async () => {
                       try {
-                        await deleteOrder(order.id);
-                        await getOrder();
-                        toast.success('Deletada com sucesso');
+                        const confirm = window.confirm(
+                          'Deseja realmente deletar ?'
+                        );
+                        if (confirm) {
+                          await deleteOrder(order.id);
+                          await getOrder();
+                          toast.success('Deletada com sucesso');
+                        }
                       } catch (err) {
                         toast.error('Não foi possível deletar');
                       }

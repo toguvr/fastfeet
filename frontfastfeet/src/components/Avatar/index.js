@@ -40,5 +40,5 @@ Avatar.propTypes = {
 Avatar.defaultProps = {
   color: '#716ac1',
   width: 35,
-  name: 'FF',
+  name: 'Fast Feet',
 };
