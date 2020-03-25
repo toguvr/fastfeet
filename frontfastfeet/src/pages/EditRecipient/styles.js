@@ -17,6 +17,10 @@ export const Container = styled.div`
       background: #ffffff;
     }
 
+    .css-yk16xz-control {
+      margin-right: 15px;
+    }
+
     label {
       display: flex;
       flex-direction: column;

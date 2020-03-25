@@ -12,7 +12,7 @@ import { routes } from '~/routes';
 import { addRecipient } from '~/services/recipient';
 import { toast } from 'react-toastify';
 import { addOrder } from '~/services/order';
-// import AsyncSelect from 'react-select/async';
+import AsyncSelect from 'react-select/async';
 
 export default function SignUpOrder() {
   const history = useHistory();
@@ -23,20 +23,44 @@ export default function SignUpOrder() {
     recipient_id: '',
     product: ''
   });
-  // const [selectValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState("")
+  const [currentValue, setCurrentValue] = useState("")
 
   useEffect(()=>{
     async function getOrder() {
       const response = await filterResult('recipientFilter', '');
 
-      setData(response.data);
+      const optionsRecipient = response.data.recipient.map(recipient => ({
+        value: recipient.id,
+        label: recipient.name,
+      }));
+
+      const optionsDeliveryman = response.data.deliverymen.map(deliverymen => ({
+        value: deliverymen.id,
+        label: deliverymen.name,
+      }));
+
+      setData({recipient: optionsRecipient, deliverymen: optionsDeliveryman});
+
       setValues({...values,
         deliveryman_id: response.data.deliverymen[0].id,
         recipient_id: response.data.recipient[0].id
       })
+
     }
     getOrder()
   },[])
+
+  const handleChangeRecipient = (newValue: any, actionMeta: any) => {
+    setValues({...values, recipient_id: newValue.value})
+    setCurrentValue({...currentValue, recipient: newValue})
+  };
+
+  const handleChangeDeliveryman = (newValue: any, actionMeta: any) => {
+    setValues({...values, deliveryman_id: newValue.value})
+    setCurrentValue({...currentValue, deliveryman: newValue})
+
+  };
 
   async function createOrder() {
     try{
@@ -46,47 +70,49 @@ export default function SignUpOrder() {
       recipient_id: '',
       product: ''
     });
+
+    setCurrentValue({deliveryman: "", recipient: ""})
+
     toast.success('Cadastrado com sucesso')
     }catch{
       toast.error('Não foi possível cadastrar')
     }
   }
 
-  // const loadOptionsDeliveryman = (selectValue, callback) => {
-  //   setTimeout(() => {
-  //     callback(filterDeliverymen(selectValue));
-  //   }, 1000);
-  // };
+  const loadOptionsDeliveryman = (inputValue, callback) => {
+    setTimeout(() => {
+      callback(filterDeliverymen(inputValue));
+    }, 500);
+  };
 
-  // const loadOptionsRecipient = (selectValue, callback) => {
-  //   setTimeout(() => {
-  //     callback(filterRecipient(selectValue));
-  //   }, 1000);
-  // };
+  const loadOptionsRecipient = (inputValue, callback) => {
+    setTimeout(() => {
+      callback(filterRecipient(inputValue));
+    }, 500);
+  };
 
 
 
-  // const filterDeliverymen = (selectValue) => {
-  //   if(data.deliverymen){
-  //   return data.deliverymen.filter(i =>
-  //     i.name.toLowerCase().includes(selectValue.toLowerCase())
-  //   );
-  // };}
 
-  // const filterRecipient = (selectValue) => {
+  const filterDeliverymen = (inputValue) => {
+    if(data.deliverymen){
+    return data.deliverymen.filter(i =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  };}
 
-  //   if(data.recipient){
-  //   return data.recipient.filter(i =>
-  //      i.name.toLowerCase().includes(selectValue.toLowerCase())
+  const filterRecipient = (inputValue) => {
+    if(data.recipient){
+    return data.recipient.filter(i =>
+       i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );}
+  };
 
-  //   );}
-  // };
-
-  // const handleInputChange = (newValue: string) => {
-  //   const inputValue = newValue.replace(/\W/g, '');
-  //   setInputValue( inputValue );
-  //   return inputValue;
-  // };
+  const handleInputChange = (newValue: string) => {
+    const inputValue = newValue.replace(/\W/g, '');
+    setInputValue( inputValue );
+    return inputValue;
+  };
 
   return (
     <>
@@ -111,53 +137,28 @@ export default function SignUpOrder() {
           <div className="group">
             <label htmlFor="recipient_id">
               Destinatário
-              {/* <AsyncSelect
+              <AsyncSelect
           cacheOptions
+          onChange={handleChangeRecipient}
           loadOptions={loadOptionsRecipient}
-          defaultOptions
+          defaultOptions={data.recipient}
           onInputChange={handleInputChange}
-        /> */}
-              <select
-                onChange={event =>
-                  setValues({
-                    ...values,
-                    [event.target.name]: event.target.value,
-                  })
-                }
-                value={values.recipient_id}
-                name="recipient_id"
-                type="text"
-              >
-                {data.recipient && data.recipient.map((recipient)=>(
-                  <option value={recipient.id}>{recipient.name}</option>
+          value={currentValue.recipient}
 
-                ))}
-              </select>
+        />
+
+
             </label>
             <label htmlFor="deliveryman_id">
               Entregador
-              {/* <AsyncSelect
+              <AsyncSelect
           cacheOptions
           loadOptions={loadOptionsDeliveryman}
-          defaultOptions
+          defaultOptions={data.deliverymen}
           onInputChange={handleInputChange}
-        /> */}
-              <select
-                onChange={event =>
-                  setValues({
-                    ...values,
-                    [event.target.name]: event.target.value,
-                  })
-                }
-                value={values.deliveryman_id}
-                name="deliveryman_id"
-                type="text"
-              >
-                        {data.deliverymen && data.deliverymen.map((recipient)=>(
-                  <option value={recipient.id}>{recipient.name}</option>
-
-                ))}
-              </select>
+          onChange={handleChangeDeliveryman}
+          value={currentValue.deliveryman}
+        />
             </label>
           </div>
 

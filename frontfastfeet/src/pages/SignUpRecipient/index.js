@@ -11,6 +11,8 @@ import { filterResult } from '~/services/filter';
 import { routes } from '~/routes';
 import { addRecipient } from '~/services/recipient';
 import { toast } from 'react-toastify';
+import NumberFormat from 'react-number-format';
+import { removeMask } from '~/utils/masks';
 
 export default function SignUpRecipient() {
   const history = useHistory();
@@ -19,6 +21,7 @@ export default function SignUpRecipient() {
 
   async function createRecipient() {
     try{
+      values.cep = removeMask(values.cep)
     await addRecipient(values);
     setValues({
       name:'',
@@ -141,7 +144,9 @@ export default function SignUpRecipient() {
             </label>
             <label htmlFor="cep">
               CEP
-              <input
+              <NumberFormat
+              format="#####-###"
+
                 onChange={event =>
                   setValues({
                     ...values,

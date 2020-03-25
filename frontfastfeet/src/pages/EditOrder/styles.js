@@ -17,6 +17,10 @@ export const Container = styled.div`
       background: #ffffff;
     }
 
+    .css-yk16xz-control {
+      margin-right: 15px;
+    }
+
     label {
       display: flex;
       flex-direction: column;
@@ -32,13 +36,14 @@ export const Container = styled.div`
       color: #999999;
       margin-right: 16px;
     }
+
     input {
       background: #ffffff 0% 0% no-repeat padding-box;
       border: 1px solid #dddddd;
       border-radius: 4px;
       padding: 12px 15px;
+      margin-right: 15px;
       color: #999999;
-      margin-right: 16px;
     }
   }
 

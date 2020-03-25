@@ -12,6 +12,8 @@ import { routes } from '~/routes';
 import { addRecipient, updateRecipient,  } from '~/services/recipient';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import NumberFormat from 'react-number-format';
+import { removeMask } from '~/utils/masks';
 
 export default function EditRecipient() {
   const history = useHistory();
@@ -32,6 +34,7 @@ export default function EditRecipient() {
 
   async function createRecipient() {
     try{
+      values.cep = removeMask(values.cep)
     await updateRecipient(values, values.id);
 
     toast.success('Atualizado com sucesso')
@@ -147,7 +150,9 @@ export default function EditRecipient() {
             </label>
             <label htmlFor="cep">
               CEP
-              <input
+              <NumberFormat
+              format="#####-###"
+
                 onChange={event =>
                   setValues({
                     ...values,
